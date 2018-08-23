@@ -1,3 +1,5 @@
+import shutil
+import sys
 import os
 from subprocess import Popen, check_call
 
@@ -54,9 +56,21 @@ def main(args):
     with open(os.devnull, 'w') as f:
         check_call(cmd, stdout=f, stderr=f)
 
-    # open Chrome with SOCKS proxy configuration
+    if sys.platform.startswith('linux'):
+        names = ['chromium-browser', 'chromium', 'google-chrome']
+        # attempt to find a chrome/chromium browser in the user's PATH
+        for name in names:
+            browser = shutil.which(name)
+            if browser is not None:
+                break
+        if browser is None:
+            raise Exception('could not find a chromium browser. searched for {}'.format(names))
+    else:
+        browser = r'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+
+    # open Chrome/Chromium with SOCKS proxy configuration
     cmd = [
-        r'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+        browser,
         'http://localhost:{}'.format(connect_port),
         '--proxy-server=socks5://localhost:{}'.format(args.port),
         '--host-resolver-rules=MAP * 0.0.0.0 , EXCLUDE localhost',
