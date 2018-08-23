@@ -9,10 +9,11 @@ These tools are written in Python and mostly function as wrappers around the `gc
 ## Installation
 
 Prerequisites:
-- Mac OS X
+- macOS or Linux
 - Python 2 or 3
 - [Google Cloud SDK](https://cloud.google.com/sdk/docs/quickstart-mac-os-x)
-- (Optional) Google Chrome installed in the (default) location `/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`
+- (Optional: macOS) Google Chrome installed in the (default) location `/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`
+- (Optional: Linux) A google browser, Chrome/Chromium, installed in your path as any of `chromium`, `chromium-browser`, `google-chrome`
 
 cloudtools can be installed from the Python package index using the pip installer: `pip install cloudtools`
 
