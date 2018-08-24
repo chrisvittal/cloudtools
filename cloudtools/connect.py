@@ -1,4 +1,3 @@
-import shutil
 import sys
 import os
 from subprocess import Popen, check_call
@@ -60,7 +59,7 @@ def main(args):
         names = ['chromium-browser', 'chromium', 'google-chrome']
         # attempt to find a chrome/chromium browser in the user's PATH
         for name in names:
-            browser = shutil.which(name)
+            browser = which(name)
             if browser is not None:
                 break
         if browser is None:
@@ -78,3 +77,41 @@ def main(args):
     ]
     with open(os.devnull, 'w') as f:
         Popen(cmd, stdout=f, stderr=f)
+
+
+def which(cmd):
+    """An almost verbatim copy of python 3.3 and later's shutil.which(), used to provide
+    a compatible way to find an executable for python2.7
+
+    Almost verbatim means that the windows specific portions have been removed, as have any
+    tunable parameters"""
+    # Check that a given file can be accessed with the correct mode.
+    # Additionally check that `file` is not a directory, as on Windows
+    # directories pass the os.access check.
+    def _access_check(fn):
+        mode = os.F_OK | os.X_OK
+        return (os.path.exists(fn) and os.access(fn, mode)
+                and not os.path.isdir(fn))
+
+    # If we're given a path with a directory part, look it up directly rather
+    # than referring to PATH directories. This includes checking relative to the
+    # current directory, e.g. ./script
+    if os.path.dirname(cmd):
+        if _access_check(cmd):
+            return cmd
+        return None
+
+    path = os.environ.get("PATH", os.defpath)
+    if not path:
+        return None
+    path = path.split(os.pathsep)
+
+    seen = set()
+    for dir in path:
+        normdir = os.path.normcase(dir)
+        if normdir not in seen:
+            seen.add(normdir)
+            name = os.path.join(dir, cmd)
+            if _access_check(name):
+                return name
+    return None
