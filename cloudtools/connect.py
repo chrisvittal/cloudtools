@@ -55,8 +55,8 @@ def main(args):
     with open(os.devnull, 'w') as f:
         check_call(cmd, stdout=f, stderr=f)
 
-    if sys.platform.startswith('linux'):
-        names = ['chromium-browser', 'chromium', 'google-chrome']
+    if sys.platform != "darwin":
+        names = ['chromium-browser', 'chromium', 'google-chrome', 'chrome.exe']
         # attempt to find a chrome/chromium browser in the user's PATH
         for name in names:
             browser = which(name)
@@ -64,7 +64,7 @@ def main(args):
                 break
         if browser is None:
             raise Exception('could not find a chromium browser. searched for {}'.format(names))
-    else:
+    else:  # on darwin, just use this hardcoded path
         browser = r'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
 
     # open Chrome/Chromium with SOCKS proxy configuration
@@ -83,8 +83,7 @@ def which(cmd):
     """An almost verbatim copy of python 3.3 and later's shutil.which(), used to provide
     a compatible way to find an executable for python2.7
 
-    Almost verbatim means that the windows specific portions have been removed, as have any
-    tunable parameters"""
+    Almost verbatim means that any tunable parameters have been removed"""
     # Check that a given file can be accessed with the correct mode.
     # Additionally check that `file` is not a directory, as on Windows
     # directories pass the os.access check.
@@ -106,12 +105,24 @@ def which(cmd):
         return None
     path = path.split(os.pathsep)
 
+    if sys.platform == "win32":
+        if os.curdir not in path:
+            path.insert(0, os.curdir)
+        pathext = os.environ.get("PATHEXT", "").split(os.pathsep)
+        if any(cmd.lower().endswith(ext.lower()) for ext in pathext):
+            files = [cmd]
+        else:
+            files = [cmd + ext for ext in pathext]
+    else:
+        files = [cmd]
+
     seen = set()
-    for dir in path:
-        normdir = os.path.normcase(dir)
+    for d in path:
+        normdir = os.path.normcase(d)
         if normdir not in seen:
             seen.add(normdir)
-            name = os.path.join(dir, cmd)
-            if _access_check(name):
-                return name
+            for f in files:
+                name = os.path.join(d, f)
+                if _access_check(name):
+                    return name
     return None

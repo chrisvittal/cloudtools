@@ -14,6 +14,7 @@ Prerequisites:
 - [Google Cloud SDK](https://cloud.google.com/sdk/docs/quickstart-mac-os-x)
 - (Optional: macOS) Google Chrome installed in the (default) location `/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`
 - (Optional: Linux) A google browser, Chrome/Chromium, installed in your path as any of `chromium`, `chromium-browser`, `google-chrome`
+- (Optional: Windows) Google Chrome, installed in your path as `chrome.exe` (case insensitive)
 
 cloudtools can be installed from the Python package index using the pip installer: `pip install cloudtools`
 
