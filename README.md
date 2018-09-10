@@ -2,9 +2,9 @@
 
 [![PyPI](https://img.shields.io/pypi/v/cloudtools.svg)]()
 
-cloudtools is a small collection of command line tools intended to make using [Hail](https://hail.is) on clusters running in Google Cloud's Dataproc service simpler. 
+cloudtools is a small collection of command line tools intended to make using [Hail](https://hail.is) on clusters running in Google Cloud's Dataproc service simpler.
 
-These tools are written in Python and mostly function as wrappers around the `gcloud` suite of command line tools included in the Google Cloud SDK. 
+These tools are written in Python and mostly function as wrappers around the `gcloud` suite of command line tools included in the Google Cloud SDK.
 
 ## Installation
 
@@ -75,14 +75,14 @@ Second argument: arg2
 
 ### Interactive Hail with Jupyter Notebooks
 
-Another way to use the Dataproc service is through a Jupyter notebook running on the cluster's master machine. By default, `cluster name start` sets up and starts a Jupyter server process - complete with a Hail kernel - on the master machine of the cluster. 
+Another way to use the Dataproc service is through a Jupyter notebook running on the cluster's master machine. By default, `cluster name start` sets up and starts a Jupyter server process - complete with a Hail kernel - on the master machine of the cluster.
 
 To use Hail in a Jupyter notebook, you'll need to have Google Chrome installed on your computer as described in the installation section above. Then, use
 ```
 cluster connect testcluster notebook
 ```
 
-to open a connection to the cluster "testcluster" through Chrome. 
+to open a connection to the cluster "testcluster" through Chrome.
 
 A new browser will open with the address `localhost:8123` -- this is port 8123 on the cluster's master machine, which is where the Jupyter notebook server is running. You should see the Google Storage home directory of the project your cluster was launched in, with all of the project's buckets listed.
 
@@ -121,7 +121,7 @@ to connect to 4041, or
 ```
 cluster connect testcluster ui2
 ```
-to connect to 4042.  
+to connect to 4042.
 
 To view details on a job that has completed, you can access the Spark history server running on port 18080 with
 ```
@@ -143,7 +143,7 @@ positional arguments:
     connect             Connect to a running Dataproc cluster.
     diagnose            Diagnose problems in a Dataproc cluster.
     stop                Shut down a Dataproc cluster.
-    
+
 optional arguments:
   -h, --help            show this help message and exit
 ```
