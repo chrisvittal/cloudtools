@@ -9,7 +9,7 @@ These tools are written in Python and mostly function as wrappers around the `gc
 ## Installation
 
 Prerequisites:
-- macOS or Linux
+- macOS, Linux, or Windows (**NOTE**: Windows is not tested but we endeavor to support it)
 - Python 2 or 3
 - [Google Cloud SDK](https://cloud.google.com/sdk/docs/quickstart-mac-os-x)
 - (Optional: macOS) Google Chrome installed in the (default) location `/Applications/Google Chrome.app/Contents/MacOS/Google Chrome`
